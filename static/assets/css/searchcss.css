@@ -1,0 +1,98 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #e0e0e0;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .header h1 {
+    color: #6f42c1;
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .header p {
+    color: #999;
+    margin: 0;
+  }
+  
+  .search-box {
+    margin-bottom: 20px;
+  }
+  
+  .search-box input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .search-box p {
+    color: #999;
+    margin-top: 5px;
+  }
+  
+  .filters {
+    margin-bottom: 20px;
+  }
+  
+  .filters a {
+    color: #6f42c1;
+    text-decoration: none;
+  }
+  
+  .results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .results p {
+    color: #6f42c1;
+    margin: 0;
+  }
+  
+  .college-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .college {
+    width: calc(33% - 20px);
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+  
+  .college h2 {
+    color: #6f42c1;
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .college p {
+    color: #333;
+    margin: 0px;
+  }
+    

@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <!-- <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Search</title> -->
+  {% include "searchhead.html" %}
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/searchcss.css' %}">
+</head> -->
+{% include "navbar.html" %}
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>College Search</h1>
+      <p>Application Requirements</p>
+    </header>
+    <div class="search-box">
+      <input type="text" placeholder="College or City Name">
+      <p>Separate multiple search terms with a comma, e.g.: Washington, Boston</p>
+    </div>
+    <div class="filters">
+      <a href="#">More filters</a>
+    </div>
+    <div class="results">
+      <p>1080 results</p>
+      <p>Sort by: College Name</p>
+    </div>
+    <div class="college-list">
+      <div class="college">
+        <h2>Aberystwyth University</h2>
+        <p>Aberystwyth, Ceredigion - GBR</p>
+        <button>Add+</button>
+      </div>
+      <div class="college">
+        <h2>Abilene Christian University</h2>
+        <p>Abilene, TX-USA</p>
+        <button>Add+</button>
+      </div>
+      <div class="college">
+        <h2>Adelphi University</h2>
+        <p>Garden City, NY - USA</p>
+        <button>Add+</button>
+      </div>
+    </div>
+  </div>
+  <!-- <script src="script.js"></script> -->
+</body>
+</html>
