@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Path Quiz</title>
+    <!-- <link rel="stylesheet" href="{% static 'styles.css' %}"> -->
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+#quiz-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Career Path Quiz</h1>
+        <form id="quiz-form">
+            {% csrf_token %}
+            <!-- Questions will be dynamically added here -->
+        </form>
+        <button id="submit-btn">Submit</button>
+    </div>
+    <script>
+        const questions = [
+    { question: "Verbal Communication: How confident are you in your ability to persuade others during discussions or debates?", answers: ["Not confident", "Slightly confident", "Moderately confident", "Very confident", "Extremely confident"] },
+    // Add other questions here
+];
+
+const form = document.getElementById("quiz-form");
+
+questions.forEach((question, index) => {
+    const fieldset = document.createElement("fieldset");
+    const legend = document.createElement("legend");
+    legend.textContent = `Question ${index + 1}`;
+    fieldset.appendChild(legend);
+    
+    const label = document.createElement("label");
+    label.textContent = question.question;
+    fieldset.appendChild(label);
+
+    question.answers.forEach(answer => {
+        const input = document.createElement("input");
+        input.setAttribute("type", "radio");
+        input.setAttribute("name", `question${index}`);
+        input.setAttribute("value", answer);
+        input.required = true;
+        const label = document.createElement("label");
+        label.textContent = answer;
+        fieldset.appendChild(input);
+        fieldset.appendChild(label);
+    });
+
+    form.appendChild(fieldset);
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("quiz-form");
+
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const answers = [];
+        formData.forEach((value, key) => {
+            answers.push(value);
+        });
+
+        fetch('/calculate/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({ answers: answers })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(`Based on your responses, your recommended career path is: ${data.result}`);
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+
+
+    </script>
+</body>
+</html>

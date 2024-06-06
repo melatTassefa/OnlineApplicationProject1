@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Quiz</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Career Quiz</h1>
+        <form id="quizForm">
+            <!-- Questions for Natural Science -->
+            <h2>Natural Science Qualities</h2>
+            <div id="naturalQualities"></div>
+
+            <!-- Questions for Social Science -->
+            <h2>Social Science Qualities</h2>
+            <div id="socialQualities"></div>
+
+            <button type="submit">Submit</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        const qualities = {
+            natural: [
+                "Curiosity",
+                "Observational Skills",
+                "Analytical Thinking",
+                "Problem-Solving Skills",
+                "Attention to Detail",
+                "Openness to New Ideas",
+                "Persistence",
+                "Math & Technology Comfort",
+                "Strong Work Ethic",
+                "Effective Communication"
+            ],
+            social: [
+                "Critical Thinking",
+                "Empathy",
+                "Communication Skills",
+                "Research Skills",
+                "Open-Mindedness",
+                "Strong Writing Skills",
+                "Quantitative Skills",
+                "Historical Understanding",
+                "Global Awareness",
+                "Ethical Considerations"
+            ]
+        };
+
+        const form = document.getElementById("quizForm");
+        const naturalDiv = document.getElementById("naturalQualities");
+        const socialDiv = document.getElementById("socialQualities");
+
+        // Generate questions for natural qualities
+        qualities.natural.forEach((quality, index) => {
+            const input = document.createElement("input");
+            input.setAttribute("type", "number");
+            input.setAttribute("min", "1");
+            input.setAttribute("max", "5");
+            input.setAttribute("name", `natural_${index}`);
+            naturalDiv.appendChild(document.createTextNode(`${quality}: `));
+            naturalDiv.appendChild(input);
+            naturalDiv.appendChild(document.createElement("br"));
+        });
+
+        // Generate questions for social qualities
+        qualities.social.forEach((quality, index) => {
+            const input = document.createElement("input");
+            input.setAttribute("type", "number");
+            input.setAttribute("min", "1");
+            input.setAttribute("max", "5");
+            input.setAttribute("name", `social_${index}`);
+            socialDiv.appendChild(document.createTextNode(`${quality}: `));
+            socialDiv.appendChild(input);
+            socialDiv.appendChild(document.createElement("br"));
+        });
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const naturalScores = [];
+            const socialScores = [];
+
+            // Extract scores for natural and social qualities
+            for (const [key, value] of formData.entries()) {
+                if (key.startsWith("natural")) {
+                    naturalScores.push(Number(value));
+                } else if (key.startsWith("social")) {
+                    socialScores.push(Number(value));
+                }
+            }
+
+            // Calculate total scores
+            const naturalTotal = naturalScores.reduce((acc, curr) => acc + curr, 0);
+            const socialTotal = socialScores.reduce((acc, curr) => acc + curr, 0);
+
+            // Determine suggestion based on scores
+            let suggestion;
+            if (naturalTotal > socialTotal) {
+                suggestion = "natural";
+            } else if (socialTotal > naturalTotal) {
+                suggestion = "social";
+            } else {
+                suggestion = "either field";
+            }
+
+            // Display suggestion
+            document.getElementById("result").textContent = `Based on your scores, we suggest you choose ${suggestion} sciences.`;
+        });
+    </script>
+</body>
+</html>
